@@ -97,6 +97,30 @@ header .stats {
   transition: border .2s;
 }
 .search-bar input:focus { border-color: var(--accent); }
+.jump-to {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--surface2);
+  border-radius: 16px;
+  padding: 0 8px;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.jump-to:focus-within { border-color: var(--accent); }
+.jump-prefix {
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 700;
+}
+.jump-to input {
+  width: 48px;
+  padding: 6px 2px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+}
 .search-bar::before {
   content: "🔍";
   position: absolute;
@@ -309,6 +333,10 @@ header .stats {
   <h1>📖 抒情簿</h1>
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="搜索内容...">
+  </div>
+  <div class="jump-to">
+    <span class="jump-prefix">#</span>
+    <input type="text" id="jumpInput" placeholder="跳转">
   </div>
   <div class="top-actions">
     <button id="favFilterBtn" title="只看收藏">⭐</button>
@@ -620,6 +648,32 @@ function bindEvents(db) {
     currentCategory = btn.dataset.cat === '全部' ? '' : btn.dataset.cat;
     applyFilters();
     if (currentFiltered.length > 0) randomEntry();
+  });
+
+  // Jump to ID
+  document.getElementById('jumpInput').addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    const val = document.getElementById('jumpInput').value.trim();
+    const targetId = parseInt(val, 10);
+    if (isNaN(targetId)) { showToast('请输入有效编号'); return; }
+    const idx = currentFiltered.findIndex(e => e.id === targetId);
+    if (idx === -1) {
+      // Try global
+      const globalIdx = entries.findIndex(e => e.id === targetId);
+      if (globalIdx === -1) { showToast(`未找到 #${targetId}`); return; }
+      // Reset category filter and jump
+      currentCategory = '';
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.cat-btn[data-cat=""]')?.classList.add('active');
+      applyFilters();
+    }
+    const newIdx = currentFiltered.findIndex(e => e.id === targetId);
+    if (newIdx >= 0) {
+      currentIndex = newIdx;
+      if (isListView) { isListView = false; showCardView(); document.getElementById('viewToggleBtn').textContent = '📋'; }
+      renderEntry(currentFiltered[currentIndex]);
+      document.getElementById('jumpInput').value = '';
+    }
   });
 
   // Search
