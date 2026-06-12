@@ -8,6 +8,15 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>
+(function() {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    document.documentElement.classList.add('light');
+    document.querySelector('meta[name="theme-color"]').content = '#f5f0eb';
+  }
+})();
+</script>
 <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>

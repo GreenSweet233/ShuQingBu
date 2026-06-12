@@ -114,14 +114,17 @@ function initKeepPosition() {
 function initTheme() {
   const saved = localStorage.getItem('theme');
   if (saved === 'light') {
-    document.body.classList.add('light');
+    document.documentElement.classList.add('light');
     document.getElementById('themeBtn').textContent = '☀️';
     document.querySelector('meta[name="theme-color"]').content = '#f5f0eb';
+  } else {
+    document.getElementById('themeBtn').textContent = '🌙';
+    document.querySelector('meta[name="theme-color"]').content = '#1a1a2e';
   }
 }
 function toggleTheme() {
-  document.body.classList.toggle('light');
-  const isLight = document.body.classList.contains('light');
+  document.documentElement.classList.toggle('light');
+  const isLight = document.documentElement.classList.contains('light');
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
   document.getElementById('themeBtn').textContent = isLight ? '☀️' : '🌙';
   document.querySelector('meta[name="theme-color"]').content = isLight ? '#f5f0eb' : '#1a1a2e';
