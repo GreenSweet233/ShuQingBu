@@ -257,6 +257,7 @@ header .stats {
 .action-btn.primary { background: var(--accent); }
 .action-btn.primary:hover { background: #d63850; }
 .action-btn.faved { background: var(--gold); color: #1a1a1a; }
+#favBtn { min-width: 120px; justify-content: center; }
 .action-btn .icon { font-size: 16px; }
 .action-btn .icon svg,
 .top-actions button svg { fill: currentColor; }
