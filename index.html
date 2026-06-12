@@ -32,7 +32,8 @@
   --gold: #b8860b;
   --shadow: 0 4px 24px rgba(0,0,0,.08);
 }
-* { margin:0; padding:0; box-sizing:border-box; }
+* { margin:0; padding:0; box-sizing:border-box; transition: background-color .5s ease, color .5s ease, border-color .5s ease, box-shadow .5s ease; }
+html { transition: background-color .5s ease; }
 body {
   font-family: "SimSun", "宋体", "Noto Serif SC", "STSong", serif;
   background: var(--bg);
