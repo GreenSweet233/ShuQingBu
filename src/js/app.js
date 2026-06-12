@@ -8,6 +8,7 @@ let favFilter = false;
 let excerptFilter = false;
 let isListView = false;
 let favorites = new Set();
+let keepReadingPosition = false;
 
 // --- Init IndexedDB ---
 function openDB() {
@@ -53,6 +54,62 @@ async function toggleFavorite(db, id) {
   });
 }
 
+// --- Reading Position ---
+function saveReadingPosition() {
+  if (!keepReadingPosition) return;
+  const position = {
+    entryId: currentFiltered[currentIndex]?.id || null,
+    category: currentCategory,
+    view: isListView ? 'list' : 'card',
+    favFilter: favFilter,
+    excerptFilter: excerptFilter,
+    timestamp: Date.now()
+  };
+  localStorage.setItem('shuqingbu-position', JSON.stringify(position));
+}
+
+function loadReadingPosition() {
+  const saved = localStorage.getItem('shuqingbu-position');
+  if (!saved) return null;
+  try {
+    return JSON.parse(saved);
+  } catch {
+    return null;
+  }
+}
+
+function toggleKeepPosition() {
+  keepReadingPosition = !keepReadingPosition;
+  localStorage.setItem('shuqingbu-keep-position', keepReadingPosition ? 'true' : 'false');
+  const btn = document.getElementById('keepPositionBtn');
+  if (keepReadingPosition) {
+    btn.textContent = '📍';
+    btn.title = '刷新后保持阅读位置（已开启）';
+    btn.classList.add('active');
+    showToast('已开启阅读位置记忆');
+  } else {
+    btn.textContent = '📍';
+    btn.title = '刷新后保持阅读位置（已关闭）';
+    btn.classList.remove('active');
+    showToast('已关闭阅读位置记忆');
+  }
+}
+
+function initKeepPosition() {
+  const saved = localStorage.getItem('shuqingbu-keep-position');
+  keepReadingPosition = saved !== 'false';
+  const btn = document.getElementById('keepPositionBtn');
+  if (keepReadingPosition) {
+    btn.textContent = '📍';
+    btn.title = '刷新后保持阅读位置（已开启）';
+    btn.classList.add('active');
+  } else {
+    btn.textContent = '📍';
+    btn.title = '刷新后保持阅读位置（已关闭）';
+    btn.classList.remove('active');
+  }
+}
+
 // --- Theme ---
 function initTheme() {
   const saved = localStorage.getItem('theme');
@@ -78,11 +135,66 @@ async function init() {
   const resp = await fetch('data/entries.json');
   entries = await resp.json();
 
+  initKeepPosition();
   renderCategories();
   applyFilters();
-  randomEntry();
+  
+  const position = loadReadingPosition();
+  if (keepReadingPosition && position && position.entryId) {
+    restorePosition(position);
+  } else {
+    randomEntry();
+  }
+  
   bindEvents(db);
   initTheme();
+}
+
+function restorePosition(position) {
+  if (position.category !== undefined) {
+    currentCategory = position.category;
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    const catBtn = document.querySelector(`.cat-btn[data-cat="${position.category}"]`) || document.querySelector('.cat-btn[data-cat=""]');
+    if (catBtn) catBtn.classList.add('active');
+  }
+  
+  if (position.favFilter !== undefined) {
+    favFilter = position.favFilter;
+    const btn = document.getElementById('favFilterBtn');
+    if (favFilter) btn.classList.add('active');
+    else btn.classList.remove('active');
+  }
+  
+  if (position.excerptFilter !== undefined) {
+    excerptFilter = position.excerptFilter;
+    const btn = document.getElementById('excerptFilterBtn');
+    if (excerptFilter) btn.classList.add('active');
+    else btn.classList.remove('active');
+  }
+  
+  applyFilters();
+  
+  if (position.entryId) {
+    const idx = currentFiltered.findIndex(e => e.id === position.entryId);
+    if (idx >= 0) {
+      currentIndex = idx;
+      renderEntry(currentFiltered[idx]);
+    } else {
+      randomEntry();
+    }
+  } else {
+    randomEntry();
+  }
+  
+  if (position.view === 'list') {
+    isListView = true;
+    document.getElementById('viewToggleBtn').textContent = '📖';
+    renderList();
+  } else {
+    isListView = false;
+    document.getElementById('viewToggleBtn').textContent = '📋';
+    showCardView();
+  }
 }
 
 // --- Category rendering ---
@@ -151,6 +263,7 @@ function navigateTo(index) {
   if (index >= currentFiltered.length) index = 0;
   currentIndex = index;
   renderEntry(currentFiltered[currentIndex]);
+  saveReadingPosition();
 }
 
 function renderEntry(entry) {
@@ -173,7 +286,7 @@ function renderEntry(entry) {
     favBtn.innerHTML = '<span class="icon">⭐</span> 已收藏';
     favBtn.className = 'action-btn faved';
   } else {
-    favBtn.innerHTML = '<span class="icon">☆</span> 收藏';
+    favBtn.innerHTML = '<span class="icon">☆</span> 收集';
     favBtn.className = 'action-btn';
   }
 }
@@ -192,6 +305,7 @@ function randomEntry() {
   const idx = Math.floor(Math.random() * currentFiltered.length);
   currentIndex = idx;
   renderEntry(currentFiltered[idx]);
+  saveReadingPosition();
   if (isListView) renderList();
 }
 
@@ -293,6 +407,7 @@ function bindEvents(db) {
       currentIndex = newIdx;
       if (isListView) { isListView = false; showCardView(); document.getElementById('viewToggleBtn').textContent = '📋'; }
       renderEntry(currentFiltered[currentIndex]);
+      saveReadingPosition();
       document.getElementById('jumpInput').value = '';
     }
   });
@@ -309,6 +424,7 @@ function bindEvents(db) {
       if (stillIn >= 0) currentIndex = stillIn;
       else currentIndex = 0;
       renderEntry(currentFiltered[currentIndex]);
+      saveReadingPosition();
     }
   });
 
@@ -352,6 +468,8 @@ function bindEvents(db) {
 
   document.getElementById('themeBtn').addEventListener('click', toggleTheme);
 
+  document.getElementById('keepPositionBtn').addEventListener('click', toggleKeepPosition);
+
   document.getElementById('viewToggleBtn').addEventListener('click', () => {
     isListView = !isListView;
     if (isListView) {
@@ -361,6 +479,7 @@ function bindEvents(db) {
       document.getElementById('viewToggleBtn').textContent = '📋';
       showCardView();
     }
+    saveReadingPosition();
   });
 
   document.getElementById('listView').addEventListener('click', (e) => {
@@ -382,6 +501,7 @@ function bindEvents(db) {
       isListView = false;
       showCardView();
       renderEntry(currentFiltered[currentIndex]);
+      saveReadingPosition();
       document.getElementById('viewToggleBtn').textContent = '📋';
     }
   });
