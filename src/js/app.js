@@ -137,25 +137,37 @@ function toggleTheme() {
 
 // --- Load Data ---
 async function init() {
-  const db = await openDB();
-  await loadFavorites(db);
+  try {
+    // 先加载数据，确保页面能显示
+    const resp = await fetch('data/entries.json');
+    entries = await resp.json();
 
-  const resp = await fetch('data/entries.json');
-  entries = await resp.json();
-
-  initKeepPosition();
-  renderCategories();
-  applyFilters();
-  
-  const position = loadReadingPosition();
-  if (keepReadingPosition && position && position.entryId) {
-    restorePosition(position);
-  } else {
-    randomEntry();
+    initKeepPosition();
+    renderCategories();
+    applyFilters();
+    
+    const position = loadReadingPosition();
+    if (keepReadingPosition && position && position.entryId) {
+      restorePosition(position);
+    } else {
+      randomEntry();
+    }
+    
+    initTheme();
+    
+    // IndexedDB 在某些移动端浏览器可能有问题，放在最后初始化
+    try {
+      const db = await openDB();
+      await loadFavorites(db);
+      bindEvents(db);
+    } catch (dbError) {
+      console.warn('IndexedDB 初始化失败，收藏功能可能受限:', dbError);
+      bindEvents(null);
+    }
+  } catch (error) {
+    console.error('初始化失败:', error);
+    showToast('加载失败，请刷新重试');
   }
-  
-  bindEvents(db);
-  initTheme();
 }
 
 function restorePosition(position) {
