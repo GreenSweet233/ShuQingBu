@@ -186,11 +186,11 @@ async function init() {
         }
         if (position.view === 'list') {
           isListView = true;
-          document.getElementById('viewToggleBtn').textContent = '📖';
+          document.getElementById('viewToggleBtn').innerHTML = '<img src="assets/icons/view-list.svg" class="icon-view">';
           renderList();
         } else {
           isListView = false;
-          document.getElementById('viewToggleBtn').textContent = '📋';
+          document.getElementById('viewToggleBtn').innerHTML = '<img src="assets/icons/view-list.svg" class="icon-view">';
           showCardView();
         }
         // 恢复筛选状态
@@ -277,11 +277,11 @@ function restorePosition(position) {
   
   if (position.view === 'list') {
     isListView = true;
-    document.getElementById('viewToggleBtn').textContent = '📖';
+    document.getElementById('viewToggleBtn').innerHTML = '<img src="assets/icons/view-list.svg" class="icon-view">';
     renderList();
   } else {
     isListView = false;
-    document.getElementById('viewToggleBtn').textContent = '📋';
+    document.getElementById('viewToggleBtn').innerHTML = '<img src="assets/icons/view-list.svg" class="icon-view">';
     showCardView();
   }
 }
@@ -496,7 +496,7 @@ function bindEvents(db) {
         const newIdx = currentFiltered.findIndex(e => e.id === targetId);
         if (newIdx >= 0) {
           currentIndex = newIdx;
-          if (isListView) { isListView = false; showCardView(); document.getElementById('viewToggleBtn').textContent = '📋'; }
+          if (isListView) { isListView = false; showCardView(); document.getElementById('viewToggleBtn').innerHTML = '<img src="assets/icons/view-list.svg" class="icon-view">'; }
           renderEntry(currentFiltered[currentIndex]);
           saveReadingPosition();
           document.getElementById('searchInput').value = '';
@@ -604,10 +604,10 @@ function bindEvents(db) {
   document.getElementById('viewToggleBtn').addEventListener('click', () => {
     isListView = !isListView;
     if (isListView) {
-      document.getElementById('viewToggleBtn').textContent = '📖';
+      document.getElementById('viewToggleBtn').innerHTML = '<img src="assets/icons/view-list.svg" class="icon-view">';
       renderList();
     } else {
-      document.getElementById('viewToggleBtn').textContent = '📋';
+      document.getElementById('viewToggleBtn').innerHTML = '<img src="assets/icons/view-list.svg" class="icon-view">';
       showCardView();
     }
     saveReadingPosition();
@@ -633,7 +633,7 @@ function bindEvents(db) {
       showCardView();
       renderEntry(currentFiltered[currentIndex]);
       saveReadingPosition();
-      document.getElementById('viewToggleBtn').textContent = '📋';
+      document.getElementById('viewToggleBtn').innerHTML = '<img src="assets/icons/view-list.svg" class="icon-view">';
     }
   });
 
