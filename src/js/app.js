@@ -283,7 +283,7 @@ function renderEntry(entry) {
 
   const favBtn = document.getElementById('favBtn');
   if (favorites.has(entry.id)) {
-    favBtn.innerHTML = '<span class="icon">⭐</span> 已收藏';
+    favBtn.innerHTML = '<span class="icon">⭐</span> 已收集';
     favBtn.className = 'action-btn faved';
   } else {
     favBtn.innerHTML = '<span class="icon">☆</span> 收集';
@@ -343,14 +343,14 @@ function showCardView() {
 // --- Import / Export Favorites ---
 async function exportFavorites() {
   const ids = Array.from(favorites);
-  if (ids.length === 0) { showToast('没有收藏的条目'); return; }
+  if (ids.length === 0) { showToast('没有收集的条目'); return; }
   const text = ids.join(',');
   await navigator.clipboard.writeText(text);
-  showToast(`已复制 ${ids.length} 个收藏ID`);
+  showToast(`已复制 ${ids.length} 个收集ID`);
 }
 
 async function importFavorites(db) {
-  const input = prompt('粘贴收藏ID，用逗号分隔，例如： 1,5,23,42');
+  const input = prompt('粘贴收集ID，用逗号分隔，例如： 1,5,23,42');
   if (!input) return;
   const ids = input.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
   if (ids.length === 0) { showToast('未识别到有效ID'); return; }
@@ -362,7 +362,7 @@ async function importFavorites(db) {
     tx.onerror = () => reject(tx.error);
   });
   ids.forEach(id => favorites.add(id));
-  showToast(`导入了 ${ids.length} 个收藏`);
+  showToast(`导入了 ${ids.length} 个收集`);
   applyFilters();
   if (currentFiltered.length > 0) randomEntry();
 }
@@ -439,7 +439,7 @@ function bindEvents(db) {
     await toggleFavorite(db, entry.id);
     renderEntry(entry);
     if (isListView) renderList();
-    showToast(favorites.has(entry.id) ? '已收藏 ⭐' : '已取消收藏');
+    showToast(favorites.has(entry.id) ? '已收集 ⭐' : '已取消收集');
   });
 
   document.getElementById('favFilterBtn').addEventListener('click', () => {
@@ -491,7 +491,7 @@ function bindEvents(db) {
       if (entry) {
         toggleFavorite(db, entry.id).then(() => {
           renderList();
-          showToast(favorites.has(entry.id) ? '已收藏 ⭐' : '已取消收藏');
+          showToast(favorites.has(entry.id) ? '已收集 ⭐' : '已取消收集');
         });
       }
       return;
