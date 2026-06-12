@@ -124,7 +124,7 @@ header h1 {
   gap: 14px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 8px 4px 14px;
+  padding: 28px 4px 28px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   /* Hide scrollbar but keep functionality */
