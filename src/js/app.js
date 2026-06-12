@@ -328,16 +328,16 @@ function renderList() {
     const fav = favorites.has(e.id) ? '⭐' : '☆';
     const excerpt = e.is_excerpt ? ' 📝' : '';
     const text = e.content.length > 100 ? e.content.slice(0, 100) + '…' : e.content;
-    const active = i === currentIndex ? ' style="border-left:3px solid var(--accent);"' : '';
-    return `<div class="list-item" data-idx="${i}"${active}>
+    const active = i === currentIndex ? ' active' : '';
+    return `<div class="list-item${active}" data-idx="${i}">
       <div class="item-date">#${e.id} &middot; ${e.date || '无日期'}${excerpt}</div>
       <div>${escHtml(text)}</div>
       <div class="item-cats">${cats}</div>
       <span class="item-fav" data-idx2="${i}">${fav}</span>
     </div>`;
   }).join('');
-  const activeItem = container.querySelector('.list-item[style*="accent"]');
-  if (activeItem) activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  const activeItem = container.querySelector('.list-item.active');
+  if (activeItem) activeItem.scrollIntoView({ block: 'nearest' });
 }
 
 function showCardView() {

@@ -267,7 +267,7 @@ header .stats {
   line-height: 1.6;
 }
 #listView .list-item:hover { background: var(--surface2); }
-#listView .list-item[style*="accent"] { background: rgba(233,69,96,.08); }
+#listView .list-item.active { border-left: 3px solid var(--accent); background: rgba(233,69,96,.08); }
 #listView .list-item .item-date { font-size: 11px; color: var(--text2); margin-bottom: 4px; }
 #listView .list-item .item-cats { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
 #listView .list-item .item-cats span { font-size: 10px; padding: 1px 8px; border-radius: 8px; background: rgba(233,69,96,.12); color: var(--accent); }
