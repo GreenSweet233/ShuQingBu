@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#1a1a2e">
+<title>抒情簿 - 分类选择</title>
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>
+(function() {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    document.documentElement.classList.add('light');
+  }
+})();
+</script>
+<link rel="stylesheet" href="src/css/categories.css?v=4">
+</head>
+<body>
+<header>
+  <button class="back-btn" id="backBtn">← 返回</button>
+  <h1>📚 选择分类</h1>
+</header>
+<div class="main-area">
+  <div class="section">
+    <div class="category-list">
+      <div class="cat-item all-cat" data-cat="">
+        <div class="name">全部</div>
+        <div class="count">1366 条</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="section">
+    <div class="section-title">主要分组</div>
+    <div class="category-list">
+      <div class="cat-item" data-cat="对体悟（抽象感知）与理解的解释">
+        <div class="name">【1】对体悟与理解的解释</div>
+        <div class="count">抽象感知</div>
+      </div>
+      <div class="cat-item" data-cat="对哲学与思想的认识">
+        <div class="name">【2】对哲学与思想的认识</div>
+        <div class="count">认识</div>
+      </div>
+      <div class="cat-item" data-cat="心流在哪">
+        <div class="name">【3】心流在哪</div>
+        <div class="count">状态</div>
+      </div>
+      <div class="cat-item" data-cat="生活动态（吐槽）">
+        <div class="name">【4】生活动态（吐槽）</div>
+        <div class="count">吐槽</div>
+      </div>
+      <div class="cat-item" data-cat="涉及到&quot;历史&quot;一词的句子">
+        <div class="name">【5】涉及到"历史"一词的句子</div>
+        <div class="count">涉及历史</div>
+      </div>
+      <div class="cat-item" data-cat="论学习、读书">
+        <div class="name">【6】论学习、读书</div>
+        <div class="count">论学习</div>
+      </div>
+      <div class="cat-item" data-cat="学科相关">
+        <div class="name">【7】学科相关</div>
+        <div class="count">专业</div>
+      </div>
+      <div class="cat-item" data-cat="对理性及其产物的思考">
+        <div class="name">【8】对理性及其产物的思考</div>
+        <div class="count">理性产物</div>
+      </div>
+      <div class="cat-item" data-cat="身份意识：自我评价">
+        <div class="name">【9】身份意识：自我评价</div>
+        <div class="count">自我评价</div>
+      </div>
+      <div class="cat-item" data-cat="宏观视角：宇宙、科学、生死、精神">
+        <div class="name">【10】宏观视角</div>
+        <div class="count">宇宙科学</div>
+      </div>
+      <div class="cat-item" data-cat="以处于青春期的姿态看爱（情）">
+        <div class="name">【11】以青春期的姿态看爱（情）</div>
+        <div class="count">青春期</div>
+      </div>
+      <div class="cat-item" data-cat="心态">
+        <div class="name">【12】心态</div>
+        <div class="count">心境</div>
+      </div>
+      <div class="cat-item" data-cat="意义">
+        <div class="name">【13】意义</div>
+        <div class="count">人生意义</div>
+      </div>
+      <div class="cat-item" data-cat="文学与艺术">
+        <div class="name">【14】文学与艺术</div>
+        <div class="count">艺术</div>
+      </div>
+      <div class="cat-item" data-cat="为人、道德与社交">
+        <div class="name">【15】为人、道德与社交</div>
+        <div class="count">社交</div>
+      </div>
+      <div class="cat-item" data-cat="价值">
+        <div class="name">【16】价值</div>
+        <div class="count">价值观</div>
+      </div>
+      <div class="cat-item" data-cat="友谊">
+        <div class="name">【17】友谊</div>
+        <div class="count">友情</div>
+      </div>
+      <div class="cat-item" data-cat="哭泣">
+        <div class="name">【18】哭泣</div>
+        <div class="count">情感</div>
+      </div>
+      <div class="cat-item" data-cat="说明">
+        <div class="name">【19】说明</div>
+        <div class="count">解释</div>
+      </div>
+      <div class="cat-item" data-cat="对记忆的认识">
+        <div class="name">【20】对记忆的认识</div>
+        <div class="count">回忆</div>
+      </div>
+      <div class="cat-item" data-cat="看字词（表层含义）">
+        <div class="name">【21】看字词（表层含义）</div>
+        <div class="count">表层含义</div>
+      </div>
+      <div class="cat-item" data-cat="教育与竞争">
+        <div class="name">【22】教育与竞争</div>
+        <div class="count">竞争</div>
+      </div>
+      <div class="cat-item" data-cat="努力与能力">
+        <div class="name">【23】努力与能力</div>
+        <div class="count">能力</div>
+      </div>
+      <div class="cat-item" data-cat="人生、命运">
+        <div class="name">【24】人生、命运</div>
+        <div class="count">命运</div>
+      </div>
+      <div class="cat-item" data-cat="欣赏">
+        <div class="name">【25】欣赏</div>
+        <div class="count">审美</div>
+      </div>
+      <div class="cat-item" data-cat="美好">
+        <div class="name">【26】美好</div>
+        <div class="count">美好事物</div>
+      </div>
+      <div class="cat-item" data-cat="一些疑惑">
+        <div class="name">【27】一些疑惑</div>
+        <div class="count">疑问</div>
+      </div>
+      <div class="cat-item" data-cat="社会">
+        <div class="name">【28】社会</div>
+        <div class="count">社会观察</div>
+      </div>
+      <div class="cat-item" data-cat="其他的一些认识">
+        <div class="name">【29】其他的一些认识</div>
+        <div class="count">杂记</div>
+      </div>
+      <div class="cat-item" data-cat="其他的声音（仅为收录回忆，不作评价）">
+        <div class="name">【30】其他的声音</div>
+        <div class="count">回忆收录</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="section small-group">
+    <div class="section-title">小分组</div>
+    <div class="category-list">
+      <div class="cat-item" data-cat="愤怒">
+        <div class="name">【a】愤怒</div>
+        <div class="count">情绪</div>
+      </div>
+      <div class="cat-item" data-cat="草稿本">
+        <div class="name">【b】草稿本</div>
+        <div class="count">草稿</div>
+      </div>
+      <div class="cat-item" data-cat="本能">
+        <div class="name">【c】本能</div>
+        <div class="count">本能反应</div>
+      </div>
+      <div class="cat-item" data-cat="名人名言">
+        <div class="name">【d】名人名言</div>
+        <div class="count">语录</div>
+      </div>
+      <div class="cat-item" data-cat="悲剧">
+        <div class="name">【e】悲剧</div>
+        <div class="count">悲剧</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="src/js/categories.js?v=4"></script>
+</body>
+</html>

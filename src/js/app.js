@@ -144,16 +144,81 @@ async function init() {
 
     initKeepPosition();
     renderCategories();
+    
+    // 检查是否从分类页面返回
+    let fromCategories = false;
+    try {
+      const selectedCat = localStorage.getItem('selected-category');
+      if (selectedCat !== null) {
+        fromCategories = true;
+        localStorage.removeItem('selected-category');
+        if (selectedCat && entries.some(e => e.categories.includes(selectedCat))) {
+          currentCategory = selectedCat;
+        } else {
+          currentCategory = '';
+        }
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        const targetBtn = document.querySelector(`.cat-btn[data-cat="${currentCategory}"]`) || document.querySelector('.cat-btn[data-cat=""]');
+        if (targetBtn) targetBtn.classList.add('active');
+      }
+    } catch (e) {
+      console.warn('分类选择处理失败:', e);
+      currentCategory = '';
+    }
+    
     applyFilters();
     
     const position = loadReadingPosition();
     if (keepReadingPosition && position && position.entryId) {
-      restorePosition(position);
+      // 如果刚从分类页面返回，保留分类选择，不覆盖为旧位置分类
+      if (fromCategories) {
+        // 用户主动选了分类，保持当前分类，只恢复具体条目
+        const idx = currentFiltered.findIndex(e => e.id === position.entryId);
+        if (idx >= 0) {
+          currentIndex = idx;
+          renderEntry(currentFiltered[idx]);
+        } else {
+          randomEntry();
+        }
+        if (position.view === 'list') {
+          isListView = true;
+          document.getElementById('viewToggleBtn').textContent = '📖';
+          renderList();
+        } else {
+          isListView = false;
+          document.getElementById('viewToggleBtn').textContent = '📋';
+          showCardView();
+        }
+        // 恢复筛选状态
+        if (position.favFilter !== undefined) {
+          favFilter = position.favFilter;
+          document.getElementById('favFilterBtn').classList.toggle('active', favFilter);
+          applyFilters();
+        }
+        if (position.excerptFilter !== undefined) {
+          excerptFilter = position.excerptFilter;
+          document.getElementById('excerptFilterBtn').classList.toggle('active', excerptFilter);
+          applyFilters();
+        }
+      } else {
+        restorePosition(position);
+      }
     } else {
       randomEntry();
     }
     
     initTheme();
+    
+    // 终极兜底：如果什么都没有渲染出来，强行显示一条
+    if (currentFiltered.length > 0 && !document.getElementById('entryContent').textContent.trim()) {
+      console.warn('终极兜底：强制显示一条内容');
+      randomEntry();
+    }
+    
+    // 清理 URL 中的缓存破坏参数
+    if (window.location.search.includes('_=')) {
+      window.history.replaceState({}, '', window.location.pathname);
+    }
     
     // IndexedDB 在某些移动端浏览器可能有问题，放在最后初始化
     try {
@@ -466,6 +531,10 @@ function bindEvents(db) {
     renderEntry(entry);
     if (isListView) renderList();
     showToast(favorites.has(entry.id) ? '已收集 ⭐' : '已取消收集');
+  });
+
+  document.getElementById('categoryBtn').addEventListener('click', () => {
+    window.location.href = 'categories.html';
   });
 
   document.getElementById('favFilterBtn').addEventListener('click', () => {
