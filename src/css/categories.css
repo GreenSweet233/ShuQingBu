@@ -1,25 +1,71 @@
 :root {
   --bg: #1a1a2e;
   --surface: #16213e;
-  --surface2: #0f3460;
   --text: #e8e8e8;
   --text2: #a0a0b0;
   --accent: #e94560;
-  --accent2: #533483;
   --gold: #f0c040;
-  --radius: 12px;
-  --shadow: 0 4px 24px rgba(0,0,0,.3);
+  --radius: 18px;
+  
+  /* Bookmark card themes (dark) */
+  --c1-bg: #2a2420;
+  --c1-border: #4a4440;
+  --c1-ribbon: #c49a6c;
+  --c2-bg: #20242a;
+  --c2-border: #40444a;
+  --c2-ribbon: #6c8ca4;
+  --c3-bg: #2a2024;
+  --c3-border: #4a4044;
+  --c3-ribbon: #a46c7c;
+  --c4-bg: #202a24;
+  --c4-border: #404a44;
+  --c4-ribbon: #6ca47c;
+  --c5-bg: #24202a;
+  --c5-border: #44404a;
+  --c5-ribbon: #8c6ca4;
+  --c6-bg: #2a2620;
+  --c6-border: #4a4640;
+  --c6-ribbon: #a48c6c;
+  --c7-bg: #20262a;
+  --c7-border: #40464a;
+  --c7-ribbon: #6c8ca4;
+  --c8-bg: #2a2220;
+  --c8-border: #4a4240;
+  --c8-ribbon: #a47c6c;
 }
 .light {
   --bg: #f5f0eb;
   --surface: #fff8f0;
-  --surface2: #e8ddd0;
   --text: #2c2c2c;
   --text2: #888;
   --accent: #c0392b;
-  --accent2: #8e6b8a;
   --gold: #b8860b;
-  --shadow: 0 4px 24px rgba(0,0,0,.08);
+  
+  /* Bookmark card themes (light) */
+  --c1-bg: #f5ede3;
+  --c1-border: #e8ddd0;
+  --c1-ribbon: #c49a6c;
+  --c2-bg: #e8eef5;
+  --c2-border: #d0dce8;
+  --c2-ribbon: #6c8ca4;
+  --c3-bg: #f5e8ee;
+  --c3-border: #e8d0dc;
+  --c3-ribbon: #a46c7c;
+  --c4-bg: #e8f5ee;
+  --c4-border: #d0e8d8;
+  --c4-ribbon: #6ca47c;
+  --c5-bg: #eee8f5;
+  --c5-border: #dcd0e8;
+  --c5-ribbon: #8c6ca4;
+  --c6-bg: #f5f0e3;
+  --c6-border: #e8e0d0;
+  --c6-ribbon: #a48c6c;
+  --c7-bg: #e8f0f5;
+  --c7-border: #d0dce8;
+  --c7-ribbon: #6c8ca4;
+  --c8-bg: #f5ece8;
+  --c8-border: #e8d8d0;
+  --c8-ribbon: #a47c6c;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body {
@@ -29,6 +75,8 @@ html, body {
   color: var(--text);
   font-family: "SimSun", "宋体", "Noto Serif SC", "STSong", serif;
 }
+
+/* ===== Header ===== */
 header {
   padding: 16px 20px;
   display: flex;
@@ -38,15 +86,19 @@ header {
 }
 .back-btn {
   padding: 8px 16px;
-  background: var(--surface2);
-  border: none;
+  background: transparent;
+  border: 1px solid var(--text2);
   border-radius: 8px;
   color: var(--text);
   font-size: 14px;
   cursor: pointer;
-  transition: all .2s;
+  transition: all .25s;
+  opacity: .7;
 }
-.back-btn:hover { background: var(--accent2); }
+.back-btn:hover {
+  opacity: 1;
+  border-color: var(--accent);
+}
 header h1 {
   font-size: 20px;
   font-weight: 700;
@@ -55,74 +107,221 @@ header h1 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ===== Main Area ===== */
 .main-area {
-  padding: 20px;
+  height: calc(100vh - 64px);
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 20px;
 }
-.section {
+
+/* ===== Bookmark Card Grid (Horizontal Scroll) ===== */
+.card-grid {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  gap: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 4px 14px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: thin;
+  scrollbar-color: var(--text2) transparent;
 }
-.section-title {
-  font-size: 12px;
-  color: var(--text2);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding-left: 8px;
+.card-grid::-webkit-scrollbar {
+  height: 4px;
 }
-.category-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px;
+.card-grid::-webkit-scrollbar-thumb {
+  background: var(--text2);
+  border-radius: 4px;
 }
-.cat-item {
-  padding: 12px 14px;
-  background: var(--surface);
+.card-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ===== Bookmark Card ===== */
+.bookmark-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 170px;
+  height: 220px;
   border-radius: var(--radius);
-  border: 1px solid transparent;
   cursor: pointer;
-  transition: all .2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  overflow: hidden;
+  user-select: none;
+  scroll-snap-align: start;
+  /* Subtle paper texture overlay */
+  background-blend-mode: overlay;
+}
+/* Ribbon accent at top */
+.bookmark-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  transition: height .3s ease;
+}
+/* Noise texture overlay */
+.bookmark-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(128,128,128,.03) 3px,
+      rgba(128,128,128,.03) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(128,128,128,.02) 3px,
+      rgba(128,128,128,.02) 4px
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+/* Card content above the texture overlay */
+.bookmark-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== Desktop Hover Fan Effect ===== */
+@media (hover: hover) {
+  .bookmark-card {
+    transition: transform .35s cubic-bezier(.4,0,.2,1), opacity .3s ease, box-shadow .35s ease;
+  }
+  .card-grid:hover .bookmark-card:not(:hover) {
+    transform: scale(.88);
+    opacity: .55;
+    box-shadow: none;
+  }
+  .bookmark-card:hover {
+    transform: scale(1.12);
+    z-index: 10;
+    box-shadow: 0 16px 40px rgba(0,0,0,.3);
+  }
+  .bookmark-card.all-card:hover {
+    transform: scale(1.12);
+    box-shadow: 0 16px 40px rgba(233,69,96,.25);
+  }
+}
+
+/* Mobile/Default tap feedback */
+.bookmark-card:active {
+  transform: scale(.96);
+}
+
+/* Card theme border */
+.bookmark-card {
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text);
+}
+.bookmark-card::before {
+  background: var(--card-ribbon);
+}
+/* Theme cycling */
+.theme-1 { --card-bg: var(--c1-bg); --card-border: var(--c1-border); --card-ribbon: var(--c1-ribbon); }
+.theme-2 { --card-bg: var(--c2-bg); --card-border: var(--c2-border); --card-ribbon: var(--c2-ribbon); }
+.theme-3 { --card-bg: var(--c3-bg); --card-border: var(--c3-border); --card-ribbon: var(--c3-ribbon); }
+.theme-4 { --card-bg: var(--c4-bg); --card-border: var(--c4-border); --card-ribbon: var(--c4-ribbon); }
+.theme-5 { --card-bg: var(--c5-bg); --card-border: var(--c5-border); --card-ribbon: var(--c5-ribbon); }
+.theme-6 { --card-bg: var(--c6-bg); --card-border: var(--c6-border); --card-ribbon: var(--c6-ribbon); }
+.theme-7 { --card-bg: var(--c7-bg); --card-border: var(--c7-border); --card-ribbon: var(--c7-ribbon); }
+.theme-8 { --card-bg: var(--c8-bg); --card-border: var(--c8-border); --card-ribbon: var(--c8-ribbon); }
+
+/* Card text styling */
+.card-cat-name {
+  font-size: 16px;
+  font-weight: 600;
   text-align: center;
+  line-height: 1.4;
+  padding: 0 14px;
+  color: var(--text);
 }
-.cat-item:hover {
-  border-color: var(--accent);
-  background: rgba(233,69,96,.1);
-}
-.cat-item.active {
-  background: var(--accent);
-  color: #fff;
-}
-.cat-item .name {
-  font-size: 14px;
-  margin-bottom: 2px;
-}
-.cat-item .count {
-  font-size: 10px;
+.card-cat-count {
+  font-size: 12px;
   opacity: .6;
+  color: var(--text2);
+  letter-spacing: .5px;
 }
-.all-cat {
-  grid-column: 1 / -1;
-  background: var(--surface2);
+/* Decorative line below count */
+.card-decoration {
+  margin-top: 4px;
+  width: 30px;
+  height: 1px;
+  background: var(--card-ribbon);
+  opacity: .4;
+  border-radius: 1px;
 }
-.all-cat:hover {
-  background: var(--accent2);
-  border-color: var(--accent2);
+
+/* ===== All-card special ===== */
+.bookmark-card.all-card {
+  border-color: var(--accent);
+  border-width: 1.5px;
+  background: var(--surface);
+  color: var(--text);
 }
-.small-group .cat-item {
-  padding: 10px 12px;
-  font-size: 13px;
+.bookmark-card.all-card::before {
+  background: linear-gradient(90deg, var(--accent), var(--gold));
 }
+.bookmark-card.all-card .card-cat-name {
+  font-size: 20px;
+}
+.bookmark-card.all-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 32px rgba(233,69,96,.18);
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 480px) {
   header { padding: 12px 14px; }
   header h1 { font-size: 18px; }
-  .main-area { padding: 14px; gap: 16px; }
-  .category-list {
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 8px;
+  .main-area { padding: 12px 14px 24px; gap: 22px; }
+  .card-grid { gap: 10px; padding: 6px 2px 12px; }
+  .bookmark-card {
+    width: 150px;
+    height: 190px;
   }
-  .cat-item { padding: 10px 12px; }
-  .cat-item .name { font-size: 13px; }
+  .card-cat-name { font-size: 14px; }
+  .bookmark-card.all-card .card-cat-name { font-size: 17px; }
+}
+@media (max-width: 360px) {
+  .card-grid { gap: 8px; padding: 4px 2px 10px; }
+  .bookmark-card {
+    width: 135px;
+    height: 170px;
+  }
+  .card-cat-name { font-size: 13px; }
+}
+@media (min-width: 768px) {
+  .bookmark-card {
+    width: 185px;
+    height: 240px;
+  }
+  .card-grid { gap: 18px; }
+}
+@media (min-width: 1024px) {
+  .card-grid { gap: 22px; }
+  .bookmark-card {
+    width: 200px;
+    height: 260px;
+  }
 }
