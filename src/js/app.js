@@ -81,53 +81,58 @@ function loadReadingPosition() {
 function toggleKeepPosition() {
   keepReadingPosition = !keepReadingPosition;
   localStorage.setItem('shuqingbu-keep-position', keepReadingPosition ? 'true' : 'false');
-  const btn = document.getElementById('keepPositionBtn');
-  if (keepReadingPosition) {
-    btn.textContent = '📍';
-    btn.title = '刷新后保持阅读位置（已开启）';
-    btn.classList.add('active');
-    showToast('已开启阅读位置记忆');
-  } else {
-    btn.textContent = '📍';
-    btn.title = '刷新后保持阅读位置（已关闭）';
-    btn.classList.remove('active');
-    showToast('已关闭阅读位置记忆');
+  updateKeepPositionUI();
+  showToast(keepReadingPosition ? '已开启阅读位置记忆' : '已关闭阅读位置记忆');
+}
+
+function updateKeepPositionUI() {
+  const toggle = document.getElementById('keepPositionToggle');
+  const status = document.getElementById('keepPositionStatus');
+  if (toggle) {
+    toggle.classList.toggle('active', keepReadingPosition);
+  }
+  if (status) {
+    status.textContent = keepReadingPosition ? '开启' : '关闭';
   }
 }
 
 function initKeepPosition() {
   const saved = localStorage.getItem('shuqingbu-keep-position');
   keepReadingPosition = saved !== 'false';
-  const btn = document.getElementById('keepPositionBtn');
-  if (keepReadingPosition) {
-    btn.textContent = '📍';
-    btn.title = '刷新后保持阅读位置（已开启）';
-    btn.classList.add('active');
-  } else {
-    btn.textContent = '📍';
-    btn.title = '刷新后保持阅读位置（已关闭）';
-    btn.classList.remove('active');
-  }
+  updateKeepPositionUI();
 }
 
 // --- Theme ---
 function initTheme() {
   const saved = localStorage.getItem('theme');
-  if (saved === 'light') {
+  const isLight = saved === 'light';
+  if (isLight) {
     document.documentElement.classList.add('light');
-    document.getElementById('themeBtn').textContent = '☀️';
     document.querySelector('meta[name="theme-color"]').content = '#f5f0eb';
   } else {
-    document.getElementById('themeBtn').textContent = '🌙';
     document.querySelector('meta[name="theme-color"]').content = '#1a1a2e';
   }
+  updateThemeUI();
 }
+
+function updateThemeUI() {
+  const isLight = document.documentElement.classList.contains('light');
+  const toggle = document.getElementById('themeToggle');
+  const status = document.getElementById('themeStatus');
+  if (toggle) {
+    toggle.classList.toggle('active', !isLight);
+  }
+  if (status) {
+    status.textContent = isLight ? '关闭' : '开启';
+  }
+}
+
 function toggleTheme() {
   document.documentElement.classList.toggle('light');
   const isLight = document.documentElement.classList.contains('light');
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
-  document.getElementById('themeBtn').textContent = isLight ? '☀️' : '🌙';
   document.querySelector('meta[name="theme-color"]').content = isLight ? '#f5f0eb' : '#1a1a2e';
+  updateThemeUI();
 }
 
 // --- Load Data ---
@@ -391,31 +396,37 @@ function bindEvents(db) {
     if (currentFiltered.length > 0) randomEntry();
   });
 
-  document.getElementById('jumpInput').addEventListener('keydown', (e) => {
+  document.getElementById('searchInput').addEventListener('keydown', (e) => {
     if (e.key !== 'Enter') return;
-    const val = document.getElementById('jumpInput').value.trim();
-    const targetId = parseInt(val, 10);
-    if (isNaN(targetId)) { showToast('请输入有效编号'); return; }
-    const idx = currentFiltered.findIndex(e => e.id === targetId);
-    if (idx === -1) {
-      const globalIdx = entries.findIndex(e => e.id === targetId);
-      if (globalIdx === -1) { showToast(`未找到 #${targetId}`); return; }
-      currentCategory = '';
-      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector('.cat-btn[data-cat=""]')?.classList.add('active');
-      applyFilters();
-    }
-    const newIdx = currentFiltered.findIndex(e => e.id === targetId);
-    if (newIdx >= 0) {
-      currentIndex = newIdx;
-      if (isListView) { isListView = false; showCardView(); document.getElementById('viewToggleBtn').textContent = '📋'; }
-      renderEntry(currentFiltered[currentIndex]);
-      saveReadingPosition();
-      document.getElementById('jumpInput').value = '';
+    const val = document.getElementById('searchInput').value.trim();
+    if (val.startsWith('#')) {
+      const numStr = val.slice(1);
+      const targetId = parseInt(numStr, 10);
+      if (!isNaN(targetId)) {
+        const idx = currentFiltered.findIndex(e => e.id === targetId);
+        if (idx === -1) {
+          const globalIdx = entries.findIndex(e => e.id === targetId);
+          if (globalIdx === -1) { showToast(`未找到 #${targetId}`); return; }
+          currentCategory = '';
+          document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+          document.querySelector('.cat-btn[data-cat=""]')?.classList.add('active');
+          applyFilters();
+        }
+        const newIdx = currentFiltered.findIndex(e => e.id === targetId);
+        if (newIdx >= 0) {
+          currentIndex = newIdx;
+          if (isListView) { isListView = false; showCardView(); document.getElementById('viewToggleBtn').textContent = '📋'; }
+          renderEntry(currentFiltered[currentIndex]);
+          saveReadingPosition();
+          document.getElementById('searchInput').value = '';
+        }
+      }
     }
   });
 
   document.getElementById('searchInput').addEventListener('input', () => {
+    const val = document.getElementById('searchInput').value.trim();
+    if (val.startsWith('#')) return;
     applyFilters();
     if (currentFiltered.length > 0 && currentIndex >= currentFiltered.length) {
       currentIndex = 0;
@@ -466,12 +477,44 @@ function bindEvents(db) {
     }
   }, { passive: false });
 
-  document.getElementById('exportBtn').addEventListener('click', exportFavorites);
-  document.getElementById('importBtn').addEventListener('click', () => importFavorites(db));
-
-  document.getElementById('themeBtn').addEventListener('click', toggleTheme);
-
-  document.getElementById('keepPositionBtn').addEventListener('click', toggleKeepPosition);
+  // Sidebar
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  
+  function openSidebar() {
+    sidebar.classList.add('show');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeSidebar() {
+    sidebar.classList.remove('show');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  
+  document.getElementById('menuBtn').addEventListener('click', openSidebar);
+  document.getElementById('closeSidebarBtn').addEventListener('click', closeSidebar);
+  overlay.addEventListener('click', closeSidebar);
+  
+  document.getElementById('keepPositionItem').addEventListener('click', toggleKeepPosition);
+  document.getElementById('themeItem').addEventListener('click', toggleTheme);
+  
+  document.getElementById('exportItem').addEventListener('click', () => {
+    exportFavorites();
+    closeSidebar();
+  });
+  
+  document.getElementById('importItem').addEventListener('click', () => {
+    importFavorites(db);
+    closeSidebar();
+  });
+  
+  document.getElementById('clearPositionItem').addEventListener('click', () => {
+    localStorage.removeItem('shuqingbu-position');
+    showToast('已清除阅读位置');
+    closeSidebar();
+  });
 
   document.getElementById('viewToggleBtn').addEventListener('click', () => {
     isListView = !isListView;

@@ -24,24 +24,15 @@
 <header>
   <h1>📖 抒情簿</h1>
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="搜索内容...">
-  </div>
-  <div class="jump-to">
-    <span class="jump-prefix">#</span>
-    <input type="text" id="jumpInput" placeholder="跳转">
+    <input type="text" id="searchInput" placeholder="搜索内容... / #跳转">
   </div>
   <div class="top-actions">
     <button id="favFilterBtn" title="只看收集">⭐</button>
     <button id="excerptFilterBtn" title="只看摘录">📝</button>
     <button id="viewToggleBtn" title="切换视图">📋</button>
-    <button id="keepPositionBtn" title="刷新后保持阅读位置（已关闭）">📍</button>
-    <button id="themeBtn" title="切换白天/深色模式">🌙</button>
+    <button id="menuBtn" title="更多选项">☰</button>
   </div>
   <span class="stats" id="statsLabel"></span>
-  <span class="io-btns">
-    <button id="exportBtn" title="导出收集">📤</button>
-    <button id="importBtn" title="导入收集">📥</button>
-  </span>
 </header>
 
 <div class="category-bar" id="categoryBar"></div>
@@ -67,6 +58,52 @@
 </div>
 
 <div id="toast"></div>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2>⚙️ 设置</h2>
+    <button id="closeSidebarBtn" class="close-btn">✕</button>
+  </div>
+  <div class="sidebar-content">
+    <div class="section">
+      <div class="section-title">阅读设置</div>
+      <div class="menu-item" id="keepPositionItem">
+        <span class="menu-icon">📍</span>
+        <span class="menu-text">保持阅读位置</span>
+        <span class="menu-status" id="keepPositionStatus">关闭</span>
+        <div class="toggle-switch" id="keepPositionToggle"></div>
+      </div>
+      <div class="menu-item" id="themeItem">
+        <span class="menu-icon">🌙</span>
+        <span class="menu-text">深色模式</span>
+        <span class="menu-status" id="themeStatus">开启</span>
+        <div class="toggle-switch" id="themeToggle"></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">数据管理</div>
+      <div class="menu-item clickable" id="exportItem">
+        <span class="menu-icon">📤</span>
+        <span class="menu-text">导出收藏</span>
+        <span class="menu-arrow">→</span>
+      </div>
+      <div class="menu-item clickable" id="importItem">
+        <span class="menu-icon">📥</span>
+        <span class="menu-text">导入收藏</span>
+        <span class="menu-arrow">→</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">快捷操作</div>
+      <div class="menu-item clickable" id="clearPositionItem">
+        <span class="menu-icon">🗑️</span>
+        <span class="menu-text">清除阅读位置</span>
+        <span class="menu-arrow">→</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="src/js/app.js"></script>
 </body>
