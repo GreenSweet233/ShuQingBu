@@ -10,6 +10,10 @@ let isListView = false;
 let favorites = new Set();
 let keepReadingPosition = false;
 
+// Star SVG icons
+const STAR_OUTLINE = '<svg class="icon-star"><use href="assets/icons.svg#star-outline"></use></svg>';
+const STAR_FILLED = '<svg class="icon-star"><use href="assets/icons.svg#star-filled"></use></svg>';
+
 // --- Init IndexedDB ---
 function openDB() {
   return new Promise((resolve, reject) => {
@@ -368,10 +372,10 @@ function renderEntry(entry) {
 
   const favBtn = document.getElementById('favBtn');
   if (favorites.has(entry.id)) {
-    favBtn.innerHTML = '<span class="icon">⭐</span> 已收集';
+    favBtn.innerHTML = '<span class="icon">' + STAR_FILLED + '</span> 已收集';
     favBtn.className = 'action-btn faved';
   } else {
-    favBtn.innerHTML = '<span class="icon">☆</span> 收集';
+    favBtn.innerHTML = '<span class="icon">' + STAR_OUTLINE + '</span> 收集';
     favBtn.className = 'action-btn';
   }
 }
@@ -402,7 +406,7 @@ function renderList() {
 
   container.innerHTML = currentFiltered.map((e, i) => {
     const cats = e.categories.map(c => `<span>${c}</span>`).join('');
-    const fav = favorites.has(e.id) ? '⭐' : '☆';
+    const fav = favorites.has(e.id) ? STAR_FILLED : STAR_OUTLINE;
     const excerpt = e.is_excerpt ? ' 📝' : '';
     const text = e.content.length > 100 ? e.content.slice(0, 100) + '…' : e.content;
     const active = i === currentIndex ? ' active' : '';
@@ -455,7 +459,7 @@ async function importFavorites(db) {
 // --- Toast ---
 function showToast(msg) {
   const el = document.getElementById('toast');
-  el.textContent = msg;
+  el.innerHTML = msg;
   el.classList.add('show');
   clearTimeout(el._timer);
   el._timer = setTimeout(() => el.classList.remove('show'), 2000);
@@ -530,7 +534,7 @@ function bindEvents(db) {
     await toggleFavorite(db, entry.id);
     renderEntry(entry);
     if (isListView) renderList();
-    showToast(favorites.has(entry.id) ? '已收集 ⭐' : '已取消收集');
+    showToast(favorites.has(entry.id) ? '已收集 ' + STAR_FILLED : '已取消收集');
   });
 
   document.getElementById('categoryBtn').addEventListener('click', () => {
@@ -618,7 +622,7 @@ function bindEvents(db) {
       if (entry) {
         toggleFavorite(db, entry.id).then(() => {
           renderList();
-          showToast(favorites.has(entry.id) ? '已收集 ⭐' : '已取消收集');
+          showToast(favorites.has(entry.id) ? '已收集 ' + STAR_FILLED : '已取消收集');
         });
       }
       return;
