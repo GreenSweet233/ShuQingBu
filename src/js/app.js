@@ -243,8 +243,14 @@ function restorePosition(position) {
   if (position.category !== undefined) {
     currentCategory = position.category;
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    const catBtn = document.querySelector(`.cat-btn[data-cat="${position.category}"]`) || document.querySelector('.cat-btn[data-cat=""]');
-    if (catBtn) catBtn.classList.add('active');
+    const catBtn = document.querySelector(`.cat-btn[data-cat="${position.category}"]`);
+    if (catBtn) {
+      catBtn.classList.add('active');
+    } else {
+      const allBtn = document.querySelector('.cat-btn[data-cat=""]');
+      if (allBtn) allBtn.classList.add('active');
+      currentCategory = '';
+    }
   }
   
   if (position.favFilter !== undefined) {
@@ -352,6 +358,7 @@ function navigateTo(index) {
   if (index >= currentFiltered.length) index = 0;
   currentIndex = index;
   renderEntry(currentFiltered[currentIndex]);
+  if (isListView) renderList();
   saveReadingPosition();
 }
 
@@ -380,10 +387,9 @@ function renderEntry(entry) {
   }
 }
 
+const HTML_ESCAPE_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 function escHtml(s) {
-  const d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
+  return s.replace(/[&<>"']/g, c => HTML_ESCAPE_MAP[c]);
 }
 
 function randomEntry() {
