@@ -27,10 +27,10 @@
     <input type="text" id="searchInput" placeholder="搜索内容... / #跳转">
   </div>
   <div class="top-actions">
-    <button id="categoryBtn" title="选择分类"><svg class="icon-book"><use href="assets/icons.svg#book"></use></svg></button>
-    <button id="favFilterBtn" title="只看收集"><svg class="icon-star"><use href="assets/icons.svg#star-filled"></use></svg></button>
-    <button id="excerptFilterBtn" title="只看摘录"><svg class="icon-excerpt"><use href="assets/icons.svg#excerpt"></use></svg></button>
-    <button id="viewToggleBtn" title="切换视图"><svg class="icon-view"><use href="assets/icons.svg#view-list"></use></svg></button>
+     <button id="categoryBtn" title="选择分类"><svg class="icon-book"><use href="#book"></use></svg></button>
+    <button id="favFilterBtn" title="只看收集"><svg class="icon-star"><use href="#star-filled"></use></svg></button>
+    <button id="excerptFilterBtn" title="只看摘录"><svg class="icon-excerpt"><use href="#excerpt"></use></svg></button>
+    <button id="viewToggleBtn" title="切换视图"><svg class="icon-view"><use href="#view-list"></use></svg></button>
     <button id="menuBtn" title="更多选项">☰</button>
   </div>
   <span class="stats" id="statsLabel"></span>
@@ -55,7 +55,7 @@
   <button class="action-btn" id="prevBtn"><span class="icon">◀</span> 上一条</button>
   <button class="action-btn primary" id="randomBtn">随机</button>
   <button class="action-btn" id="nextBtn"><span class="icon">▶</span> 下一条</button>
-  <button class="action-btn" id="favBtn"><span class="icon"><svg class="icon-star"><use href="assets/icons.svg#star-outline"></use></svg></span> 收集</button>
+  <button class="action-btn" id="favBtn"><span class="icon"><svg class="icon-star"><use href="#star-outline"></use></svg></span> 收集</button>
 </div>
 
 <div id="toast"></div>
@@ -63,20 +63,20 @@
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <h2><svg class="icon-gear"><use href="assets/icons.svg#gear"></use></svg> 设置</h2>
+    <h2><svg class="icon-gear"><use href="#gear"></use></svg> 设置</h2>
     <button id="closeSidebarBtn" class="close-btn">✕</button>
   </div>
   <div class="sidebar-content">
     <div class="section">
       <div class="section-title">阅读设置</div>
       <div class="menu-item" id="keepPositionItem">
-        <span class="menu-icon"><svg class="icon-balloon"><use href="assets/icons.svg#balloon"></use></svg></span>
+        <span class="menu-icon"><svg class="icon-balloon"><use href="#balloon"></use></svg></span>
         <span class="menu-text">保持阅读位置</span>
         <span class="menu-status" id="keepPositionStatus">关闭</span>
         <div class="toggle-switch" id="keepPositionToggle"></div>
       </div>
       <div class="menu-item" id="themeItem">
-        <span class="menu-icon"><svg class="icon-moon"><use href="assets/icons.svg#moon"></use></svg></span>
+        <span class="menu-icon"><svg class="icon-moon"><use href="#moon"></use></svg></span>
         <span class="menu-text">深色模式</span>
         <span class="menu-status" id="themeStatus">开启</span>
         <div class="toggle-switch" id="themeToggle"></div>
@@ -85,12 +85,12 @@
     <div class="section">
       <div class="section-title">数据管理</div>
       <div class="menu-item clickable" id="exportItem">
-        <span class="menu-icon"><svg class="icon-export"><use href="assets/icons.svg#export"></use></svg></span>
+        <span class="menu-icon"><svg class="icon-export"><use href="#export"></use></svg></span>
         <span class="menu-text">导出收藏</span>
         <span class="menu-arrow">→</span>
       </div>
       <div class="menu-item clickable" id="importItem">
-        <span class="menu-icon"><svg class="icon-import"><use href="assets/icons.svg#import"></use></svg></span>
+        <span class="menu-icon"><svg class="icon-import"><use href="#import"></use></svg></span>
         <span class="menu-text">导入收藏</span>
         <span class="menu-arrow">→</span>
       </div>
@@ -98,7 +98,7 @@
     <div class="section">
       <div class="section-title">快捷操作</div>
       <div class="menu-item clickable" id="clearPositionItem">
-        <span class="menu-icon"><svg class="icon-trash"><use href="assets/icons.svg#trash"></use></svg></span>
+        <span class="menu-icon"><svg class="icon-trash"><use href="#trash"></use></svg></span>
         <span class="menu-text">清除阅读位置</span>
         <span class="menu-arrow">→</span>
       </div>
@@ -107,5 +107,64 @@
 </div>
 
 <script src="src/js/app.js?v=4"></script>
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="star-filled" viewBox="0 0 576 512">
+    <path d="M309.5-18.9c-4.1-8-12.4-13.1-21.4-13.1s-17.3 5.1-21.4 13.1L193.1 125.3 33.2 150.7c-8.9 1.4-16.3 7.7-19.1 16.3s-.5 18 5.8 24.4l114.4 114.5-25.2 159.9c-1.4 8.9 2.3 17.9 9.6 23.2s16.9 6.1 25 2L288.1 417.6 432.4 491c8 4.1 17.7 3.3 25-2s11-14.2 9.6-23.2L441.7 305.9 556.1 191.4c6.4-6.4 8.6-15.8 5.8-24.4s-10.1-14.9-19.1-16.3L383 125.3 309.5-18.9z"/>
+  </symbol>
+  <symbol id="star-outline" viewBox="0 0 576 512">
+    <path d="M287.9 0c9.2 0 17.5 5.1 21.6 13.1l73.5 144.3 159.9 25.4c8.9 1.4 16.3 7.7 19.1 16.3s.5 18-5.8 24.4L441.7 305.9 467 465.8c1.4 8.9-2.3 17.9-9.6 23.2s-16.9 6.1-25 2L287.9 417.6 143.2 491c-8 4.1-17.7 3.3-25-2s-11-14.2-9.6-23.2l25.3-159.9L22.7 215.4c-6.4-6.4-8.6-15.8-5.8-24.4s10.1-14.9 19.1-16.3l159.9-25.4L266.3 13.1C270.4 5.1 278.7 0 287.9 0zm0 76.8l-57.8 113.2c-3.5 6.8-9.9 11.6-17.5 12.8l-127.5 20 92.4 91.8c5.4 5.4 7.9 13.1 6.7 20.7l-21.8 127.5 113.3-57.6c6.8-3.5 14.9-3.5 21.7 0l113.3 57.6-21.8-127.5c-1.2-7.6 1.2-15.3 6.7-20.7l92.4-91.8-127.5-20c-7.6-1.2-14-6-17.5-12.8L287.9 76.8z"/>
+  </symbol>
+  <symbol id="book" viewBox="0 0 448 512">
+    <path d="M384 512L96 512c-53 0-96-43-96-96L0 96C0 43 43 0 96 0L400 0c26.5 0 48 21.5 48 48l0 288c0 20.9-13.4 38.7-32 45.3l0 66.7c17.7 0 32 14.3 32 32s-14.3 32-32 32l-32 0zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0 0-64-256 0zm32-232c0 13.3 10.7 24 24 24l176 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-176 0c-13.3 0-24 10.7-24 24zm24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24l176 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-176 0z"/>
+  </symbol>
+  <symbol id="view-list" viewBox="0 0 200 150">
+    <rect x="10" y="10" width="180" height="130" rx="16"/>
+    <circle cx="40" cy="40" r="8" opacity="0.3"/>
+    <circle cx="65" cy="40" r="8" opacity="0.3"/>
+    <circle cx="90" cy="40" r="8" opacity="0.3"/>
+    <rect x="30" y="70" width="140" height="50" rx="8" opacity="0.3"/>
+  </symbol>
+  <symbol id="excerpt" viewBox="0 0 640 512">
+    <path d="M128.1 0c-35.3 0-64 28.7-64 64l0 384c0 35.3 28.7 64 64 64l146.2 0 10.9-54.5c4.3-21.7 15-41.6 30.6-57.2l132.2-132.2 0-97.5c0-17-6.7-33.3-18.7-45.3L322.8 18.7C310.8 6.7 294.5 0 277.6 0L128.1 0zM389.6 176l-93.5 0c-13.3 0-24-10.7-24-24l0-93.5 117.5 117.5zM332.3 466.9l-11.9 59.6c-.2 .9-.3 1.9-.3 2.9 0 8 6.5 14.6 14.6 14.6 1 0 1.9-.1 2.9-.3l59.6-11.9c12.4-2.5 23.8-8.6 32.7-17.5l118.9-118.9-80-80-118.9 118.9c-8.9 8.9-15 20.3-17.5 32.7zm267.8-123c22.1-22.1 22.1-57.9 0-80s-57.9-22.1-80 0l-28.8 28.8 80 80 28.8-28.8z"/>
+  </symbol>
+  <symbol id="gear" viewBox="0 0 512 512">
+    <path d="M195.1 9.5C198.1-5.3 211.2-16 226.4-16l59.8 0c15.2 0 28.3 10.7 31.3 25.5L332 79.5c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9l-29.9 51.8c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5l-59.8 0c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8L73.5 432.3c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7L12.3 185.8c-11.4-10.1-14-26.8-6.5-39.9L35.7 94.1c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8L195.1 9.5zM256.3 336a80 80 0 1 0 -.6-160 80 80 0 1 0 .6 160z"/>
+  </symbol>
+  <symbol id="moon" viewBox="0 0 512 512">
+    <path d="M256 0C114.6 0 0 114.6 0 256S114.6 512 256 512c68.8 0 131.3-27.2 177.3-71.4 7.3-7 9.4-17.9 5.3-27.1s-13.7-14.9-23.8-14.1c-4.9 .4-9.8 .6-14.8 .6-101.6 0-184-82.4-184-184 0-72.1 41.5-134.6 102.1-164.8 9.1-4.5 14.3-14.3 13.1-24.4S322.6 8.5 312.7 6.3C294.4 2.2 275.4 0 256 0z"/>
+  </symbol>
+  <symbol id="balloon" viewBox="0 0 200 200">
+    <path d="M 100 30 C 140 30, 165 70, 150 110 C 140 135, 120 140, 110 145 C 115 150, 118 155, 115 160 L 85 160 C 82 155, 85 150, 90 145 C 80 140, 60 135, 50 110 C 35 70, 60 30, 100 30 Z"/>
+    <path d="M 75 55 C 65 60, 60 75, 65 90 C 68 85, 72 70, 80 65 C 85 60, 92 60, 95 62 C 90 52, 85 50, 75 55 Z" opacity="0.25"/>
+  </symbol>
+  <symbol id="trash" viewBox="0 0 200 200">
+    <g transform="translate(0, 32)">
+      <rect x="85" y="20" width="30" height="12" rx="4"/>
+      <rect x="70" y="32" width="60" height="12" rx="4"/>
+      <path d="M 75 44 L 80 110 C 80 115, 120 115, 120 110 L 125 44 Z"/>
+      <line x1="78" y1="70" x2="122" y2="70" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+      <line x1="80" y1="90" x2="120" y2="90" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+    </g>
+  </symbol>
+  <symbol id="import" viewBox="0 0 200 200">
+    <g transform="translate(0, 0)">
+      <path d="M 100 20 L 100 100" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+      <polygon points="100,110 70,80 130,80"/>
+      <rect x="60" y="120" width="80" height="60" rx="8"/>
+      <line x1="70" y1="140" x2="130" y2="140" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+      <line x1="80" y1="158" x2="120" y2="158" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+    </g>
+  </symbol>
+  <symbol id="export" viewBox="0 0 200 200">
+    <g transform="translate(0, 0)">
+      <rect x="60" y="30" width="80" height="60" rx="8"/>
+      <line x1="70" y1="50" x2="130" y2="50" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+      <line x1="80" y1="68" x2="120" y2="68" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+      <path d="M 100 100 L 100 170" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+      <polygon points="100,90 70,120 130,120"/>
+    </g>
+  </symbol>
+</svg>
 </body>
 </html>
