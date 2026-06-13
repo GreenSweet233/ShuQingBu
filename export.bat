@@ -1,12 +1,15 @@
 @echo off
 chcp 65001 >nul
-cd /d "%~dp0"
+
+set PROJECT=D:\Windows\GreenSweet\小本本备份\抒情簿AI_Project
+
 echo ================================
 echo  转换 Excel → entries.json
 echo ================================
-python scripts\export_json.py
+
+python "%PROJECT%\scripts\export_json.py"
 if errorlevel 1 (
-    echo [失败] 请检查 export_json.py 是否有误
+    echo [失败] 请检查 scripts\export_json.py 是否有误
     pause
     exit /b 1
 )
