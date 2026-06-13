@@ -1,5 +1,5 @@
 const CACHE = 'shuqingbu-v4';
-const CORE = ['index.html', 'manifest.json', 'assets/icons/icon-192.png', 'assets/icons/icon-512.png', 'assets/icons.svg', 'src/css/style.css', 'src/js/app.js'];
+const CORE = ['index.html', 'manifest.json', 'assets/icons/icon-192.png', 'assets/icons/icon-512.png', 'src/css/style.css', 'src/js/app.js'];
 const DATA_CACHE = 'shuqingbu-data';
 
 self.addEventListener('install', (e) => {
