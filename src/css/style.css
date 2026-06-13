@@ -263,14 +263,14 @@ header .stats {
 .top-actions button svg { fill: currentColor; }
 .icon-star { width: 1em; height: 1em; display: inline-block; vertical-align: -3px; fill: currentColor; }
 .icon-book { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; fill: currentColor; }
-.icon-excerpt { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; }
-.icon-view { width: 22px; height: 18px; display: inline-block; vertical-align: -3px; }
-.icon-gear { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; }
-.icon-moon { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; }
-.icon-balloon { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
-.icon-trash { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
-.icon-import { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
-.icon-export { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
+.icon-excerpt { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; fill: currentColor; }
+.icon-view { width: 22px; height: 18px; display: inline-block; vertical-align: -3px; fill: currentColor; }
+.icon-gear { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; fill: currentColor; }
+.icon-moon { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; fill: currentColor; }
+.icon-balloon { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; fill: currentColor; }
+.icon-trash { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; fill: currentColor; }
+.icon-import { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; fill: currentColor; }
+.icon-export { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; fill: currentColor; }
 #listView {
   display: none;
   flex-direction: column;
