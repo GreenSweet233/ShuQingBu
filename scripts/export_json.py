@@ -1,7 +1,11 @@
 import openpyxl
 import json
+import os
 
-wb = openpyxl.load_workbook("D:\\Windows\\GreenSweet\\小本本备份\\抒情簿AI_Project\\data\\抒情簿——哲学部.xlsx")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
+
+wb = openpyxl.load_workbook(os.path.join(PROJECT_DIR, "data", "抒情簿——哲学部.xlsx"))
 ws = wb["Main"]
 
 cat_map = {
@@ -88,7 +92,7 @@ for row in ws.iter_rows(min_row=4, values_only=False):
     })
 
 output = json.dumps(entries, ensure_ascii=False, indent=2)
-out_path = "D:\\Windows\\GreenSweet\\小本本备份\\抒情簿AI_Project\\data\\entries.json"
+out_path = os.path.join(PROJECT_DIR, "data", "entries.json")
 with open(out_path, "w", encoding="utf-8") as f:
     f.write(output)
 
