@@ -267,10 +267,10 @@ header .stats {
 .icon-view { width: 22px; height: 18px; display: inline-block; vertical-align: -3px; }
 .icon-gear { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; }
 .icon-moon { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; }
-.icon-balloon { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; }
-.icon-trash { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; }
-.icon-import { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; }
-.icon-export { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; }
+.icon-balloon { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
+.icon-trash { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
+.icon-import { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
+.icon-export { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
 #listView {
   display: none;
   flex-direction: column;
