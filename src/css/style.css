@@ -100,14 +100,16 @@ header .stats {
   transition: border .2s;
 }
 .search-bar input:focus { border-color: var(--accent); }
-.search-bar::before {
-  content: "🔍";
+.icon-search {
   position: absolute;
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 12px;
-  opacity: .5;
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  color: var(--text2);
+  pointer-events: none;
 }
 .top-actions {
   display: flex;
@@ -271,6 +273,7 @@ header .stats {
 .icon-trash { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; fill: currentColor; }
 .icon-import { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; fill: currentColor; }
 .icon-export { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; fill: currentColor; }
+
 #listView {
   display: none;
   flex-direction: column;
