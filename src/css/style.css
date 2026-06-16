@@ -46,8 +46,7 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background-color: #f5f0eb;
-  opacity: 0.04;
-  background-image: radial-gradient(circle at center center, #e0c8a0, #f5f0eb), repeating-radial-gradient(circle at center center, #e0c8a0, #e0c8a0, 10px, transparent 20px, transparent 10px);
+  background-image: radial-gradient(circle at center center, #f0e4d0, #f5f0eb), repeating-radial-gradient(circle at center center, #f0e4d0, #f0e4d0, 12px, transparent 24px, transparent 12px);
   background-blend-mode: multiply;
 }
 header {
