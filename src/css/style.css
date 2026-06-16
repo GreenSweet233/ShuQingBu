@@ -37,6 +37,18 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-color: #E5E5F7;
+  opacity: 0.8;
+  background-image: radial-gradient(circle at center center, #444CF7, #E5E5F7), repeating-radial-gradient(circle at center center, #444CF7, #444CF7, 10px, transparent 20px, transparent 10px);
+  background-blend-mode: multiply;
 }
 header {
   position: fixed;
